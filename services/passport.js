@@ -6,8 +6,9 @@ const keys = require('../config/keys');
 const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
-   done(null, user.id);
+   done(null, user._id);
 });
+
 passport.deserializeUser((id, done) => {
    User.findById(id)
        .then(user => {
@@ -21,7 +22,7 @@ passport.use(
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback'
     }, (accessToken, refreshToken, profile, done) => {
-        User.find({googleId: profile.id})
+        User.findOne({googleId: profile.id})
             .then((existingUser) => {
                 if (existingUser) {
                     done(null, existingUser);

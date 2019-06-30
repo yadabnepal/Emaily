@@ -1,8 +1,8 @@
-const  express = require('express');
-const mongoose = require('mongoose');
-const cookieSession =  require('cookie-session');
-const passport = require('passport');
-const keys = require('./config/keys');
+const   express = require('express'),
+        mongoose = require('mongoose'),
+        cookieSession =  require('cookie-session'),
+        passport = require('passport'),
+        keys = require('./config/keys');
 require('./models/User');
 require('./services/passport');
 
