@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
@@ -34,3 +35,22 @@ passport.use(
             });
     })
 );
+
+
+passport.use(new LinkedInStrategy({
+    clientID: keys.linkedinClientID,
+    clientSecret: keys.linkedinClientSecret,
+    callbackURL: "http://localhost:5000/auth/linkedin/callback/",
+    scope: ['r_emailaddress', 'r_liteprofile'],
+}, function(accessToken, refreshToken, profile, done) {
+    User.findOne({googleId: profile.id})
+        .then((existingUser) => {
+            if (existingUser) {
+                done(null, existingUser);
+            } else {
+                new User({googleId: profile.id })
+                    .save()
+                    .then(user => done(null, user));
+            }
+        });
+}));
