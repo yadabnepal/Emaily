@@ -5,7 +5,13 @@ module.exports = (app) =>
         scope: ['profile', 'email']
     }));
 
-    app.get('/auth/google/callback', passport.authenticate('google'));
+    app.get(
+        '/auth/google/callback',
+        passport.authenticate('google'),
+        (req, res) => {
+            res.redirect('/surveys ');
+        }
+    );
 
     app.get('/auth/linkedin', passport.authenticate('linkedin', {
         scope: ['r_liteprofile', 'r_emailaddress']
@@ -15,7 +21,7 @@ module.exports = (app) =>
 
     app.get('/api/logout', (req, res) => {
         req.logout();
-        res.send(req.user);
+        res.redirect("/");
     });
 
     app.get('/api/current_user', (req, res) => {
