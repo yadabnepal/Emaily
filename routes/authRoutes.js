@@ -17,7 +17,13 @@ module.exports = (app) =>
         scope: ['r_liteprofile', 'r_emailaddress']
     }));
 
-    app.get('/auth/linkedin/callback', passport.authenticate('linkedin'));
+    app.get(
+        '/auth/linkedin/callback',
+        passport.authenticate('linkedin'),
+        (req, res) => {
+            res.redirect('/surveys ');
+        }
+    );
 
     app.get('/api/logout', (req, res) => {
         req.logout();
