@@ -13,16 +13,19 @@ class Header extends Component {
                 return (
                     <>
                         <LoginModal/>
-                        <a className="waves-effect waves-light modal-trigger"
+                        <Link to={"#"} className="waves-effect waves-light modal-trigger"
                            data-target="modal1" >
                             Login
-                        </a>
+                        </Link>
                     </>
                 );
             default:
                 return (
                     <>
                         <li><Payments/></li>
+                        <li style={{margin: '0 10px 0 10px'}}>
+                            Credits: <span className="badge">{this.props.auth.credits}</span>
+                        </li>
                         <li><a href="/api/logout">Logout</a></li>
                     </>
                 )

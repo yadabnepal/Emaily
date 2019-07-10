@@ -33,7 +33,6 @@ passport.use(
     })
 );
 
-
 passport.use(
     new LinkedInStrategy({
         clientID: keys.linkedinClientID,

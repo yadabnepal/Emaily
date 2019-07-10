@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import M from "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 import {connect} from "react-redux";
+import { Link } from 'react-router-dom';
 
 class Modal extends Component {
     componentDidMount() {
@@ -9,28 +10,15 @@ class Modal extends Component {
             onOpenStart: () => {
                 console.log("Open Start");
             },
-            onOpenEnd: () => {
-                console.log("Open End");
-            },
-            onCloseStart: () => {
-                console.log("Close Start");
-            },
-            onCloseEnd: () => {
-                console.log("Close End");
-            },
             inDuration: 250,
             outDuration: 250,
             opacity: 0.5,
-            dismissible: false,
+            dismissible: true,
+            preventScrolling: true,
             startingTop: "4%",
             endingTop: "10%"
         };
         M.Modal.init(this.Modal, options);
-        // If you want to work on instance of the Modal then you can use the below code snippet
-        // let instance = M.Modal.getInstance(this.Modal);
-        // instance.open();
-        // instance.close();
-        // instance.destroy();
     }
 
     render() {
@@ -41,11 +29,9 @@ class Modal extends Component {
                         this.Modal = Modal;
                     }}
                     id="modal1"
-                    className="modal"
+                    className="modal col s3"
                 >
-                    {/* If you want Bottom Sheet Modal then add
-        bottom-sheet class */}
-                    <div className="blue-text modal-content">
+                    <div className="modal-content">
                         <h4 className="blue-text">Login Using</h4>
                         <a href="/auth/google" className="waves-effect waves-light btn social google">
                              Sign in with google
@@ -55,12 +41,9 @@ class Modal extends Component {
                         </a>
                     </div>
                     <div className="modal-footer">
-                        <a href="#" className="modal-close waves-effect waves-red btn-flat">
-                            Disagree
-                        </a>
-                        <a href="#" className="modal-close waves-effect waves-green btn-flat">
-                            Agree
-                        </a>
+                        <Link to={"#"}  className="modal-close waves-effect waves-red btn-small red">
+                            Cancle
+                        </Link>
                     </div>
                 </div>
             </>
