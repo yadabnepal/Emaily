@@ -24,7 +24,7 @@ class Header extends Component {
                     <>
                         <li><Payments/></li>
                         <li style={{margin: '0 10px 0 10px'}}>
-                            Credits: <span className="badge">{this.props.auth.credits}</span>
+                            Credits: {this.props.auth.credits}
                         </li>
                         <li><a href="/api/logout">Logout</a></li>
                     </>
