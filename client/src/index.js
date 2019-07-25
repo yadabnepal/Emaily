@@ -10,7 +10,7 @@ import reducers from './reducers';
 
 //To be removed. only for development
 import axios from 'axios';
-windows.axios = axios;
+window.axios = axios;
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
