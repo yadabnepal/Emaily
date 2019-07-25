@@ -8,8 +8,6 @@ require('./models/User');
 require('./models/Survey');
 require('./services/passport');
 
-
-//sendGridKey: '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'
 mongoose.connect(keys.mongoURI);
 
 const app = express();

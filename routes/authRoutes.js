@@ -21,7 +21,7 @@ module.exports = (app) =>
         '/auth/linkedin/callback',
         passport.authenticate('linkedin'),
         (req, res) => {
-            res.redirect('/surveys ');
+            res.redirect('/surveys');
         }
     );
 
