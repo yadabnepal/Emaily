@@ -7,7 +7,7 @@ import '../style/emaily.css';
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import SurveyNew from './surveys/SurveyNew';
 
 class App extends Component {
     componentDidMount() {
@@ -17,10 +17,10 @@ class App extends Component {
         return (
             <div className="container">
                 <BrowserRouter>
-                    <div>
+                    <div >
                         <Header/>
                         <Route exact path="/" component={Landing}/>
-                        <Route path="/surveys" component={Dashboard}/>
+                        <Route exact path="/surveys" component={Dashboard}/>
                         <Route path="/surveys/new" component={SurveyNew}/>
                     </div>
                 </BrowserRouter>
