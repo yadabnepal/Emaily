@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const { Path } = require('path-parser');
+const { URL } = require('url');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -11,26 +14,46 @@ module.exports = app => {
       res.send("Thanks for voting");
   });
 
-  app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
-      const { title, subject, body, recipients } = req.body;
-      const survey = new Survey({
-          title,
-          subject,
-          body,
-          recipients: recipients.split(',').map(email => ({ email: email.trim() })),
-          _user: req.user.id,
-          dateSent: Date.now(),
-      });
+    app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
+        const { title, subject, body, recipients } = req.body;
 
-      try {
-          const mailer = new Mailer(survey, surveyTemplate(survey));
-          await mailer.send();
-          await survey.save();
-          req.user.credits -= 1;
-          const user = await req.user.save();
-          res.send(user);
-      } catch (err) {
-          res.status(422).send(err);
-      }
-  });
+        const survey = new Survey({
+            title,
+            subject,
+            body,
+            recipients: recipients.split(',').map(email => ({ email: email.trim() })),
+            _user: req.user.id,
+            dateSent: Date.now()
+        });
+
+        // Great place to send an email!
+        const mailer = new Mailer(survey, surveyTemplate(survey));
+
+        try {
+            await mailer.send();
+            await survey.save();
+            req.user.credits -= 1;
+            const user = await req.user.save();
+
+            res.send(user);
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    app.post('/api/surveys/webhooks', (req, res) => {
+       const p = new Path('/api/surveys/:surveyId/:choice');
+       const events = _.chain(req.body)
+           .map(({email, url})=> {
+          const match = p.test(new URL(url).pathname);
+          if (match) {
+              return {email, surveyId: match.surveyId, choice: match.choice}
+          }
+       })
+       .compact()
+       .uniqBy('email', 'surveyId');
+       console.log(events);
+
+       res.send({});
+    });
 };
