@@ -6,9 +6,8 @@ export default (emails) => {
         .map(email => email.trim())
         .filter(email => emailRegex.test(email) === false);
 
-    if(invalidEmails.length) {
+    if (invalidEmails.length) {
         return `These emails are invalid: ${invalidEmails}`;
     }
-
-    return;
-}
+    return null;
+};

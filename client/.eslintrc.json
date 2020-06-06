@@ -1,0 +1,6 @@
+{
+    "extends": [
+        "@eea/eslint-config-reactjs"
+    ],
+    "parser": "babel-eslint"
+}

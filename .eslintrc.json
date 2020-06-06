@@ -1,0 +1,5 @@
+{
+    "extends": [
+        "@eea/eslint-config-reactjs"
+    ]
+}
